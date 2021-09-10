@@ -13,7 +13,7 @@ public:
     bool win() const;
 private:
     char board[MAX_HEIGHT][MAX_WIDTH];
-    int heigth, width, turn = 0, lastX = -1, lastY = -1;
+    int height, width, turn = 0, lastX = -1, lastY = -1;
 };
 
 #endif
