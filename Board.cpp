@@ -14,15 +14,28 @@ Board::Board(int height, int width) : height(height), width(width)
 
 void Board::print() const
 {
-    for (int i = 0; i < heigth; ++i)
+    int turns = 1; // сложи го в .h и да се взима от там директно 
+    
+    std::cout << "\n\t\tPlayer 1: @\n\t\tPlayer 2: #\n\n";
+    std::cout << "\t\tturns: " << turns++;
+    std::cout << "\n\n\n\n";
+    
+    std::cout << "\t\t";
+    for (int j = 0; j < 2*width + 1; ++j)
+        std::cout << "_";
+    std::cout << "\n";
+    for (int i = 0; i < height; ++i)
     {
-        std::cout << "|";
+        std::cout << "\t\t|";
         for (int j = 0; j < width; ++j)
         {
             std::cout << board[i][j] << "|";
         }
         std::cout << "\n";
     }
+    std::cout << "\t\t";
+    for (int j = 0; j < 2*width + 1; ++j)
+        std::cout << "¯";
 }
 
 void Board::update(int x, int y)
