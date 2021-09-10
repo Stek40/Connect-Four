@@ -16,9 +16,10 @@ void Board::print() const
 {
     for (int i = 0; i < heigth; ++i)
     {
+        std::cout << "|";
         for (int j = 0; j < width; ++j)
         {
-            std::cout << "|" << board[i][j] << "|";
+            std::cout << board[i][j] << "|";
         }
         std::cout << "\n";
     }
