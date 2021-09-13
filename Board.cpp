@@ -5,7 +5,7 @@ Board::Board(int height, int width) : height(height), width(width)
 {
     for (int i = 0; i < height; ++i)
     {
-        for (int j = 0; i < width; ++j)
+        for (int j = 0; j < width; ++j)
         {
             board[i][j] = ' ';
         }
@@ -14,15 +14,14 @@ Board::Board(int height, int width) : height(height), width(width)
 
 void Board::print() const
 {
-    int turns = 1; // сложи го в .h и да се взима от там директно 
-    
     std::cout << "\n\t\tPlayer 1: @\n\t\tPlayer 2: #\n\n";
-    std::cout << "\t\tturns: " << turns++;
+    // std::cout << "\t\tturns: " << turns++;
     std::cout << "\n\n\n\n";
-    
+
     std::cout << "\t\t";
     for (int j = 0; j < 2*width + 1; ++j)
         std::cout << "_";
+
     std::cout << "\n";
     for (int i = 0; i < height; ++i)
     {
@@ -34,15 +33,16 @@ void Board::print() const
         std::cout << "\n";
     }
     std::cout << "\t\t";
+
     for (int j = 0; j < 2*width + 1; ++j)
-        std::cout << "¯";
+        std::cout << "-";
 }
 
-void Board::update(int x, int y)
+void Board::update(int column)
 {
-    board[x][y] = (!turn ? 'A' : 'B');
-    lastX = x;
-    lastY = y;
+    lastColumn = column;
+
+    board[lastRow][lastColumn] = (!turn ? '@' : '#');
     turn = (turn + 1) % 2;
 }
 
@@ -50,11 +50,30 @@ bool Board::win() const
 {
     int count = 0;
 
-    // horizontal check
+    const char check[2] = { '@', '#' };
 
-    // diagonal check 1
+    // horizontal
+    for (int i = lastColumn - 3; i <= lastColumn + 3; ++i)
+    {
+        if (i >= 0 || i < width)
+        {
+            if (board[lastRow][i] == check[turn])
+                ++count;
+            else
+                count = 0;
+        }
+        if (count == 4)
+        {
+            std::cout << "\n\t\tPlayer " << turn + 1 << " wins.\n\n";
+            return true;
+        }
+    }
 
-    // diagonal check 2
+    // 1st diagonal
 
-    // vertical check
+    // 2nd diagonal
+
+    // vertical
+
+    return false;
 }
