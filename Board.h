@@ -9,14 +9,14 @@ class Board
 public:
     Board(int height, int width);
     void print() const;
-    void update(int, &int);
+    bool update(int, &int);
     bool win() const;
-    
+
 private:
     char board[MAX_HEIGHT][MAX_WIDTH];
-    int height, width, turn = 0,
-        lastRow = -1, lastColumn = -1;
-    int n_full[10] = {0};
+    unsigned height, width, turn = 0,
+        lastRow = -1, lastColumn = -1,
+        empty_column_boxes[MAX_WIDTH];
 };
 
 #endif
