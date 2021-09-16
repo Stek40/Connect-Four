@@ -1,14 +1,23 @@
 #include "Board.h"
 #include <iostream>
 
+
 Board::Board(int height, int width) : height(height), width(width)
 {
+    //board 
     for (int i = 0; i < height; ++i)
     {
         for (int j = 0; j < width; ++j)
         {
             board[i][j] = ' ';
         }
+    }
+    
+    //array for empty_column_boxes
+    
+    for (int i = 0; i < height; i++)
+    {
+        empty_column_boxes[i] = height;
     }
 }
 
@@ -38,12 +47,22 @@ void Board::print() const
         std::cout << "-";
 }
 
-void Board::update(int column)
-{
-    lastColumn = column;
 
-    board[lastRow][lastColumn] = (!turn ? '@' : '#');
-    turn = (turn + 1) % 2;
+bool Board::update(int column)
+{
+    if (empty_column_boxes[column] == 0)//full column
+    {
+        return false;
+        
+    } else
+    {
+        turn = (turn + 1) % 2; //changes @/#
+        empty_column_boxes[column]--;
+        lastColumn = column;
+        lastRow = height - empty_column_boxes[column];
+        board[height - lastRow][lastColumn] = (!turn ? '@' : '#');
+        return true;
+    }
 }
 
 bool Board::win() const
@@ -55,7 +74,7 @@ bool Board::win() const
     // horizontal
     for (int i = lastColumn - 3; i <= lastColumn + 3; ++i)
     {
-        if (i >= 0 || i < width)
+        if (i >= 0 && i < width)
         {
             if (board[lastRow][i] == check[turn])
                 ++count;
