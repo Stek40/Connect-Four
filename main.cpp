@@ -21,7 +21,7 @@ int main()
     if (b.win()) 
     {
         int a;
-        std::cin>>a;
+        std::cin>>a; //here it must stop because it is vertical win 
     };
     b.print();
     b.update(2);
