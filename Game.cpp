@@ -21,5 +21,5 @@ void Game::play()
 			std::cin >> col;
 		}
 	}
-
+	board.print();
 }
