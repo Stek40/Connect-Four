@@ -16,7 +16,7 @@ Board::Board(int height, int width) : height(height), width(width)
 
     //array for empty_column_boxes
 
-    for (int i = 0; i < height; i++)
+    for (int i = 0; i < width; i++)
     {
         empty_column_boxes[i] = height;
     }
