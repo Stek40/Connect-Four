@@ -1,3 +1,4 @@
+
 #include "Board.h"
 #include <iostream>
 
@@ -28,7 +29,7 @@ void Board::print() const
     std::cout << "\n\n\n\n";
 
     std::cout << "\t\t";
-    for (int j = 0; j < 2*width + 1; ++j)
+    for (int j = 0; j < 2 * width + 1; ++j)
         std::cout << "_";
 
     std::cout << "\n";
@@ -43,19 +44,20 @@ void Board::print() const
     }
     std::cout << "\t\t";
 
-    for (int j = 0; j < 2*width + 1; ++j)
+    for (int j = 0; j < 2 * width + 1; ++j)
         std::cout << "-";
 }
 
 
 bool Board::update(int column)
 {
-    if (empty_column_boxes[column] == 0)//full column
+    if (column < 0 || column > width - 1 || empty_column_boxes[column] == 0)//full column
     {
         return false;
-
-    } else
+    }
+    else
     {
+        turns++;
         turn = (turn + 1) % 2; //changes @/#
         empty_column_boxes[column]--;
         lastColumn = column;
@@ -151,4 +153,9 @@ bool Board::win() const
 
 
     return false;
+}
+
+int Board::get_turns()
+{
+    return turns;
 }
