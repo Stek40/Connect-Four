@@ -1,5 +1,5 @@
 # 
-=== Console Game Connect 4 ===
+=== Console Game "Connect 4" ===
 
 written by 
  svetoslavBogdanov
