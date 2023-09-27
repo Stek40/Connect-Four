@@ -5,12 +5,13 @@
 
 class Game
 {
-
-
-
 public:
+	Game();
 	Game(int, int);
+
 	void play();
+	bool is_running();
+	void draw();
 
 private:
 	Board board;

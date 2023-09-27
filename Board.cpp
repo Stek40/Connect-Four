@@ -1,21 +1,30 @@
-
 #include "Board.h"
 #include <iostream>
 
-
 Board::Board(int height, int width) : height(height), width(width)
 {
-    //board
+     initialize_board();
+     initialize_columns_capacity();
+}
+
+void Board::initialize_board()
+{ 
+    matrix = new char*[height];
     for (int i = 0; i < height; ++i)
     {
+        matrix[i] = new char[width];
+
         for (int j = 0; j < width; ++j)
         {
-            board[i][j] = ' ';
+           // std::cout << i << " " << j << std::endl;
+            matrix[i][j] = ' ';
         }
     }
+}
 
-    //array for empty_column_boxes
-
+void Board::initialize_columns_capacity()
+{
+    empty_column_boxes = new int[width];
     for (int i = 0; i < width; i++)
     {
         empty_column_boxes[i] = height;
@@ -38,7 +47,7 @@ void Board::print() const
         std::cout << "\t\t|";
         for (int j = 0; j < width; ++j)
         {
-            std::cout << board[i][j] << "|";
+            std::cout << matrix[i][j] << "|";
         }
         std::cout << "\n";
     }
@@ -48,23 +57,32 @@ void Board::print() const
         std::cout << "-";
 }
 
+void::Board::play_turn()
+{
+	int column = -1;
+    
+	while (update(column) != SUCCESS)
+	{
+		std::cout << "\tenter column: ";
+		std::cin >> column;
+	}
+}
 
 bool Board::update(int column)
 {
-    if (column < 0 || column > width - 1 || empty_column_boxes[column] == 0)//full column
+    if (column < 0 || column > width - 1 || empty_column_boxes[column] == 0)
     {
         return false;
     }
-    else
-    {
-        turns++;
-        turn = (turn + 1) % 2; //changes @/#
-        empty_column_boxes[column]--;
-        lastColumn = column;
-        lastRow = empty_column_boxes[column];
-        board[lastRow][lastColumn] = (!turn ? '@' : '#');
-        return true;
-    }
+
+    turn = (turn + 1) % 2; //changes @/#
+    empty_column_boxes[column]--;
+    lastColumn = column;
+    lastRow = empty_column_boxes[column];
+    matrix[lastRow][lastColumn] = (!turn ? '@' : '#');
+    total_turns++;
+
+    return true;
 }
 
 bool Board::win() const
@@ -78,7 +96,7 @@ bool Board::win() const
     {
         if (i >= 0 && i < width)
         {
-            if (board[lastRow][i] == check[turn])
+            if (matrix[lastRow][i] == check[turn])
                 ++count;
             else
                 count = 0;
@@ -95,7 +113,7 @@ bool Board::win() const
     {
         if (i >= 0 && i < height)
         {
-            if (board[i][lastColumn] == check[turn])
+            if (matrix[i][lastColumn] == check[turn])
                 ++count;
             else
                 count = 0;
@@ -113,7 +131,7 @@ bool Board::win() const
     {
         if (i >= 0 && i < width && lastRow + j >= 0 && lastRow + j < height)
         {
-            if (board[lastRow + j][i] == check[turn])
+            if (matrix[lastRow + j][i] == check[turn])
             {
                 ++count;
             }
@@ -135,7 +153,7 @@ bool Board::win() const
     {
         if (i >= 0 && i < width && lastRow + j >= 0 && lastRow + j < height)
         {
-            if (board[lastRow + j][i] == check[turn])
+            if (matrix[lastRow + j][i] == check[turn])
             {
                 ++count;
             }
@@ -151,11 +169,10 @@ bool Board::win() const
         }
     }
 
-
     return false;
 }
 
-int Board::get_turns()
+int Board::get_total_turns()
 {
-    return turns;
+    return total_turns;
 }

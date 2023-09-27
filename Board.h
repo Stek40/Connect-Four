@@ -1,22 +1,35 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-const int MAX_HEIGHT = 20;
-const int MAX_WIDTH = 40;
+int const DEFAULT_HEIGHT = 6;
+int const DEFAULT_WIDTH = 7;
 
 class Board
 {
 public:
-    Board(int height, int width);
+	int const SUCCESS = 1;
+
+    Board(int height = DEFAULT_HEIGHT, int width = DEFAULT_WIDTH);
+
+    void initialize_board();
+    void initialize_columns_capacity();
     void print() const;
-    bool update(int column);
     bool win() const;
-    int get_turns();
+    void play_turn();
+    int get_total_turns();
+
 private:
-    char board[MAX_HEIGHT][MAX_WIDTH];
-    int height, width, turn = 0, turns = 0,
-        lastRow = -1, lastColumn = -1,
-        empty_column_boxes[MAX_WIDTH];
+    char **matrix;
+    int height,
+        width,
+        turn = 0,
+        total_turns = 0,
+        lastRow = -1,
+        lastColumn = -1,
+        *empty_column_boxes;
+
+        
+    bool update(int column);
 };
 
 #endif

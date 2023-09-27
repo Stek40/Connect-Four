@@ -1,25 +1,33 @@
 #include "Game.h"
 #include <iostream>
 
-Game::Game(int height, int width):board(Board(height, width))
+Game::Game() : board(Board())
+{
+}
+
+Game::Game(int height, int width) : board(height, width)
 {
 }
 
 void Game::play()
 {
-	int col;
-
-	while (board.get_turns() < 7 || !board.win())
+	while (is_running())
 	{
-		board.print();
-		std::cout << "\n\tenter column: ";
-		std::cin >> col;
+	//do changes
+	board.play_turn();
 
-		while (!board.update(col))
-		{
-			std::cout << "\tenter column: ";
-			std::cin >> col;
-		}
+	//draw game
+	draw();
 	}
+}
+
+bool Game::is_running()
+{
+	return board.get_total_turns() < 7 || !board.win();
+}
+
+void Game::draw()
+{
 	board.print();
+	std::cout << "\n\tenter column: ";
 }
